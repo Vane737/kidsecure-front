@@ -30,5 +30,5 @@ yarn dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
-
+Open [view project online]((https://app.netlify.com/sites/storied-medovik-3d600c)https://app.netlify.com/sites/storied-medovik-3d600c) with your browser to see the result.
 
