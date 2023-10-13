@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import Contacto from './pages/Contacto';
-import HomePage from './pages/HomePage';
 import { Children,  CreateEditChildren, ReadChildren  } from './pages/children';
 import { Parents, CreateEditParents, ReadParents } from './pages/parents';
 import { Personnel, ReadPersonnel, CreateEditPersonnel, VerifyPersonnel } from './pages/personnel';
