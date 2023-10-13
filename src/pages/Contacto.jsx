@@ -5,8 +5,8 @@
 
 export default function Contacto() {
     return (
-        <div className="">
-            <h1>Hola desde Contactoooooooo</h1>
+        <div className="w-full">
+            <h1>Bienvenidos..</h1>
         </div>
     );
 }
