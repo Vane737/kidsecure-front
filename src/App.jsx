@@ -2,11 +2,14 @@
 // import reactLogo from './assets/react.svg'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Acerca } from './pages/Acerca'
-import { Home } from './pages/Home'
+// import { Home } from './pages/Home'
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import Contacto from './pages/Contacto';
+import HomePage from './pages/HomePage';
+import { Children,  CreateEditChildren, ReadChildren  } from './pages/children';
+import { Parents, CreateEditParents, ReadParents } from './pages/parents';
+import { Personnel, ReadPersonnel, CreateEditPersonnel, VerifyPersonnel } from './pages/personnel';
 // import viteLogo from '/vite.svg'
 
 
@@ -21,18 +24,36 @@ function App() {
         <div className='flex'>
         <SideBar />
         <Routes>       {/* El que contendra las rutas */}
-          <Route path='/' element={<Home />} />
-          <Route path='/acerca' element={<Acerca /> } />
+          <Route path='/' element={<HomePage />} />
           <Route path='/contacto' element={ <Contacto /> } />
+
+          <Route path='/niños'>
+            <Route index element={<Children /> } />
+            <Route path='create' element={<CreateEditChildren /> } />
+            <Route path='edit' element={<CreateEditChildren /> } />
+            <Route path=':id' element={<ReadChildren /> } />
+          </Route>
+
           <Route path='/personal'>
-            <Route path=':id' element={<div>Persona</div>} />
+            <Route index element={<Personnel /> } />
+            <Route path='create/:id' element={<CreateEditPersonnel /> } />
+            <Route path='edit' element={<CreateEditPersonnel /> } />
+            <Route path=':id' element={<ReadPersonnel /> } />
+            <Route path='verificar/:id' element={<VerifyPersonnel /> } />
           </Route>
           <Route path='/padres'>
+            <Route index element={<Parents /> } />
+            <Route path='create/:id' element={<CreateEditParents /> } />
+            <Route path='edit' element={<CreateEditParents /> } />
+            <Route path=':id' element={<ReadParents /> } />
+          </Route>
+          
+          {/* <Route path='/padres'>
             <Route path=':id' element={<div>Padre</div>} />
           </Route>
           <Route path='/niños'>
             <Route path=':id' element={<div>Niño</div>} />
-          </Route>
+          </Route> */}
 
         </Routes>
       </div>
