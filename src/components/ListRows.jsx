@@ -13,7 +13,8 @@ export const ListRows = ({
   head = [],
   body = [],
   getId,
-  setVerify
+  setButton,
+  textButton
 }) => {
   //obtengo el id y la opcion que se selecciono (borrar,mostrar y editar)
   // const navigate = useNavigate();
@@ -51,21 +52,21 @@ export const ListRows = ({
             )
           ))}
             {
-              setVerify ? (
+              setButton ? (
               <td>
                 <button
                   className="bg-primary rounded-md p-2 font-semibold pr-4 pl-4 text-white mr-3"
                   onClick={() => onClickId(b, "verificar")}
                 >
-                Verificar
+                { textButton }
               </button>
               </td>
             ) : (
-              <span></span>
+              <></>
             )}
             <td>
-              <div className="flex flex-wrap items-center justify-around">
-                  <span></span>
+              <div className="flex flex-wrap items-center justify-stretch">
+                  {/* <span></span> */}
                   <button
                     className="rounded-md p-2 text-customPink"
                     onClick={() => onClickId(b, "borrar")}

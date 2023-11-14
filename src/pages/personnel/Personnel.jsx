@@ -90,7 +90,7 @@ export const Personnel = () => {
           <p>Cargando...</p>
         ) : (
           <div className='mt-16'>
-            <ListRows head={head} body={listData} getId={handleClickOption} setVerify={true}/>
+            <ListRows head={head} body={listData} getId={handleClickOption} setButton={true} textButton="Verificar"/>
             {/* <Pagination  offset= {offset} regTotal ={ regTotal } onOffsetChange={handleOffsetChange} regXPage = {regXPage}/> */}
           </div>
         )}

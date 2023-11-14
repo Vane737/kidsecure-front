@@ -1,135 +1,115 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-// import api from "../../../API/axios";
-import { useEffect, useState } from "react";
+import api from "../../api/kidsecureApi";
+import { useState } from "react";
 
 export const CreateEditParents = () => {
   let { id } = useParams();
   const navigate = useNavigate();
-  const [categorias, setCategorias] = useState([]);
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [date, setDate] = useState("");
-  const [categoriaId, setCategoriaId] = useState("");
-  const [authors, setAuthors] = useState([]);
-  const [authorName, setAuthorName] = useState("");
-  const [editorial, setEditorial] = useState("");
-  const [image, setImage] = useState();
+  const [name, setName] = useState("");
+  const [cellphone, setCellphone] = useState("");
+  const [ci, setCi] = useState("");
+  const [photo, setPhoto] = useState(null); // Cambio: Inicializa photo como null
+  const [email, setEmail] = useState(""); // Cambio: Inicializa photo como null
+  const [password, setPassword] = useState(""); // Cambio: Inicializa photo como null
+  const [address, setAddress] = useState(""); // Cambio: Inicializa photo como null
 
+  // Handlers
+  const handlePersonSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(); // Crea un objeto FormData
 
-  useEffect(() => {
-    // api
-    //   .get(`/categoria`)
-    //   .then((res) => {
-    //     setCategorias(res.data.categorias);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  }, []);
+    data.append("name", name);
+    data.append("cellphone", cellphone);
+    data.append("ci", ci);
+    data.append("user_id", id); // Ya es un número, no necesitas parseInt
+    data.append("photo", photo); // Agrega el archivo al objeto FormData
+    data.append("email", email); // Agrega el archivo al objeto FormData
+    data.append("password", password); // Agrega el archivo al objeto FormData
+    data.append("address", address); // Agrega el archivo al objeto FormData
 
-  //handlers
-  const handleBookSubmit = (e) => {
-    // e.preventDefault();
-    // const data = {
-    //   titulo: title,
-    //   precio: parseInt(price),
-    //   fecha_publicacion: date,
-    //   categoriaId: parseInt(categoriaId),
-    //   editorial: editorial,
-    //   autores: authors,
-    //   img: image,
-    // }
-    // const token = localStorage.getItem('x-token');
-    // console.log("data", data);
-    // if (id) {
-    //   //editar
-    //   api
-    //     .put(`PERSONAL/${id}`, data)
-    //     .then((res) => {
-    //       console.log(res);
-    //       navigate("/admin/providers");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // } else {
-    //   //crear
-    //   api
-    //     .post("/PERSONAL", data,{
-    //       headers: {
-    //         "x-token": token,
-    //       }
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //       navigate("/admin/book");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // }
+    api
+      .post("/authorized-person/register", data, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Importante especificar el tipo de contenido como 'multipart/form-data'
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        navigate("/personal");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  //Handle add author
-  const handleAddAuthor = () => {
-    setAuthors([...authors, authorName]);
-    setAuthorName("");
-  }
-
-  const handleChangeImage = (e) => {
-    const reader = new FileReader()
-
-    reader.readAsDataURL(e.target.files[0])
-
-    reader.onload = () => {
-      // console.log('called: ', reader.result);
-      setImage(reader.result);
-    }
+  const handleChangePhoto = (e) => {
+    setPhoto(e.target.files[0]); // Cambio: Establece photo con el archivo seleccionado
   };
-  
+
   return (
     <div className="container mx-auto w-3/6">
-      <h1 className="text-2xl font-bold text-center mb-4 w-full pt-5">
-        {id ? "EDITAR PADRE/TUTOR" : "REGISTRAR PADRE/TUTOR"}
-      </h1>
-      <form onSubmit={handleBookSubmit}>
+      <h1 className="text-2xl font-bold text-center mb-4 w-full pt-5">REGISTRAR PERSONAL</h1>
+      <form onSubmit={handlePersonSubmit}>
         <div className="mb-4">
-          <label htmlFor="titulo" className="block mb-2 w-full">
-            NOMBRE
-          </label>
+          <label htmlFor="name" className="block mb-2 w-full">NOMBRE</label>
           <input
+            id="name"
             type="text"
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             className="border border-gray-300 px-3 py-2 w-full rounded-md"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="precio" className="block mb-2">
-            CELULAR
-          </label>
+          <label htmlFor="cellphone" className="block mb-2">CELULAR</label>
           <input
+            id="cellphone"
             type="text"
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => setCellphone(e.target.value)}
             className="border border-gray-300 px-3 py-2 w-full rounded-md"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="fecha_publicacion" className="block mb-2">
-            CI
-          </label>
+          <label htmlFor="ci" className="block mb-2">CI</label>
           <input
+            id="ci"
             type="text"
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => setCi(e.target.value)}
             className="border border-gray-300 px-3 py-2 w-full rounded-md"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="img" className="block mb-2">
-            IMAGEN
-          </label>
+          <label htmlFor="email" className="block mb-2">CORREO</label>
           <input
+            id="email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            className="border border-gray-300 px-3 py-2 w-full rounded-md"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="password" className="block mb-2">CONTRASEÑA</label>
+          <input
+            id="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            className="border border-gray-300 px-3 py-2 w-full rounded-md"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="address" className="block mb-2">DIRECCIÓN</label>
+          <input
+            id="address"
+            type="text"
+            onChange={(e) => setAddress(e.target.value)}
+            className="border border-gray-300 px-3 py-2 w-full rounded-md"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="photo" className="block mb-2">IMAGEN</label>
+          <input
+            id="photo"
             type="file"
-            onChange={handleChangeImage}
+            onChange={handleChangePhoto}
             className="border border-gray-300 px-3 py-2 w-full rounded-md"
           />
         </div>
@@ -138,13 +118,13 @@ export const CreateEditParents = () => {
             type="submit"
             className="bg-secondary rounded-md p-2 block w-full mb-4"
           >
-            {id ? "Editar" : "Registrar"}
+            Registrar
           </button>
 
           <Link
             type="button"
-            className="bg-customPink rounded-md text-center p-2 block w-full"
-            to="/padres"
+            className="bg-customPink rounded-md text-center p-2 block w-full mb-4"
+            to="/niños"
           >
             Cancelar
           </Link>
@@ -152,4 +132,4 @@ export const CreateEditParents = () => {
       </form>
     </div>
   );
-}
+};

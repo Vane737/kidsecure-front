@@ -9,6 +9,8 @@ import Contacto from './pages/Contacto';
 import { Children,  CreateEditChildren, ReadChildren  } from './pages/children';
 import { Parents, CreateEditParents, ReadParents } from './pages/parents';
 import { Personnel, ReadPersonnel, CreateEditPersonnel, VerifyPersonnel } from './pages/personnel';
+import { Classroom, CreateEditClassroom, ReadClassroom, ChildrenList } from './pages/classroom';
+import { ViolenceCamera } from './pages/violence';
 
 // import viteLogo from '/vite.svg'
 
@@ -48,6 +50,28 @@ function App() {
             <Route path=':id' element={<ReadParents /> } />
           </Route>
           
+          <Route path='/salas'>
+            <Route index element={<Classroom /> } />
+            <Route path='create' element={<CreateEditClassroom /> } />
+            <Route path='edit/:id' element={<CreateEditClassroom /> } />
+            <Route path=':id' element={<ReadClassroom /> } />
+            <Route path='admin' element={<ChildrenList /> } />
+          </Route>
+
+          <Route path='/mensajes'>
+            <Route index element={<Classroom /> } />
+            <Route path='create' element={<CreateEditClassroom /> } />
+            <Route path='edit/:id' element={<CreateEditClassroom /> } />
+            <Route path=':id' element={<ReadClassroom /> } />
+          </Route>
+
+          <Route path='/deteccion'>
+            <Route index element={<ViolenceCamera /> } />
+            <Route path='create' element={<CreateEditClassroom /> } />
+            <Route path='edit/:id' element={<CreateEditClassroom /> } />
+            <Route path=':id' element={<ReadClassroom /> } />
+          </Route>
+
           {/* <Route path='/padres'>
             <Route path=':id' element={<div>Padre</div>} />
           </Route>
