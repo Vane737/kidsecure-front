@@ -13,12 +13,11 @@ export const Classroom = () => {
   const navigate = useNavigate();
   // const regXPage = 6;
   // const [ offset, setOffset ] = useState(0);
-  // const { listData, loading } = useListDatas(`/authorized-person`);
-  const listData = [
-    {id: "1", nombre: "Sala1", descripcion: "Primer sala"},
-    {id: "2", nombre: "Sala", descripcion: "Segunda sala"}
-  ]
-  const loading = false;
+  const { listData, loading } = useListDatas(`/classroom`);
+  // const listData = [
+  //   {id: "1", nombre: "Sala1", descripcion: "Primer sala"},
+  //   {id: "2", nombre: "Sala", descripcion: "Segunda sala"}
+  // ]
   const [isOpen, setIsOpen] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
   const [personalId, setPersonalId] = useState(null);
@@ -33,7 +32,7 @@ export const Classroom = () => {
       case 'editar':
         return navigate(`/salas/edit/${id}`);
       case 'verificar':
-        return navigate(`/salas/admin`);
+        return navigate(`/salas/admin/${id}`);
       default:
         break;
     }
@@ -95,7 +94,6 @@ export const Classroom = () => {
         ) : (
           <div className='mt-16'>
             <ListRows head={head} body={listData} getId={handleClickOption} setButton={true} textButton="Administrar"/>
-            {/* <Pagination  offset= {offset} regTotal ={ regTotal } onOffsetChange={handleOffsetChange} regXPage = {regXPage}/> */}
           </div>
         )}
         {isOpen && <MyModal Text={textBorrar} estados={closeModal} />}

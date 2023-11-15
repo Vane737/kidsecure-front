@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/kidsecureApi";
 import { useState } from "react";
 

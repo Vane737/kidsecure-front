@@ -43,8 +43,8 @@ export const ListRows = ({
         {body.map((b, i) => (
           <tr className="border-b border-gray-20 h-14 text-left" key={i}>
             {Object.keys(b).map((value, idx) => (
-            (value !== "img_url" && value !== "face_id") && (
-              <td className="font-normal pl-5" key={idx}>
+            (value !== "password" && value !== "img_url" && value !== "face_id" && value !== "children" && value !== "createdAt" && value !== "updatedAt") && (
+              <td className="font-normal pl-2 pr-3" key={idx}>
                 {b[value].nombre
                   ? b[value].nombre
                   : b[value]}

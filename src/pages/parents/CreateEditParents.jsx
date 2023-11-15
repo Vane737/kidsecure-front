@@ -10,7 +10,7 @@ export const CreateEditParents = () => {
   const [ci, setCi] = useState("");
   const [photo, setPhoto] = useState(null); // Cambio: Inicializa photo como null
   const [email, setEmail] = useState(""); // Cambio: Inicializa photo como null
-  const [password, setPassword] = useState(""); // Cambio: Inicializa photo como null
+  // const [password, setPassword] = useState(""); // Cambio: Inicializa photo como null
   const [address, setAddress] = useState(""); // Cambio: Inicializa photo como null
 
   // Handlers
@@ -21,21 +21,21 @@ export const CreateEditParents = () => {
     data.append("name", name);
     data.append("cellphone", cellphone);
     data.append("ci", ci);
-    data.append("user_id", id); // Ya es un número, no necesitas parseInt
+    // data.append("user_id", id); // Ya es un número, no necesitas parseInt
     data.append("photo", photo); // Agrega el archivo al objeto FormData
     data.append("email", email); // Agrega el archivo al objeto FormData
-    data.append("password", password); // Agrega el archivo al objeto FormData
+    // data.append("password", password); // Agrega el archivo al objeto FormData
     data.append("address", address); // Agrega el archivo al objeto FormData
 
     api
-      .post("/authorized-person/register", data, {
+      .patch(`/child/${id}/father`, data, {
         headers: {
           "Content-Type": "multipart/form-data", // Importante especificar el tipo de contenido como 'multipart/form-data'
         },
       })
       .then((res) => {
         console.log(res);
-        navigate("/personal");
+        navigate("/padres");
       })
       .catch((err) => {
         console.log(err);
@@ -83,15 +83,6 @@ export const CreateEditParents = () => {
             id="email"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-gray-300 px-3 py-2 w-full rounded-md"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block mb-2">CONTRASEÑA</label>
-          <input
-            id="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
             className="border border-gray-300 px-3 py-2 w-full rounded-md"
           />
         </div>

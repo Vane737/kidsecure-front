@@ -55,7 +55,7 @@ function App() {
             <Route path='create' element={<CreateEditClassroom /> } />
             <Route path='edit/:id' element={<CreateEditClassroom /> } />
             <Route path=':id' element={<ReadClassroom /> } />
-            <Route path='admin' element={<ChildrenList /> } />
+            <Route path='admin/:id' element={<ChildrenList /> } />
           </Route>
 
           <Route path='/mensajes'>
