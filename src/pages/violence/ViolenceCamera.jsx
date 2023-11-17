@@ -1,16 +1,15 @@
 import { useRef, useState } from 'react';
-// import {  useNavigate } from 'react-router-dom';
 import RecordRTC from 'recordrtc'
 import api from '../../api/kidsecureApi';
-// import api from '../../API/axios';
-// import Pagination from '../../components/utils/Pagination';
+
 
 export const ViolenceCamera = () => {
 
   const [recording, setRecording] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const [jobId, setJobId] = useState("");
-  const [violenveList, setViolenceList] = useState([]);
+  const [isButtonPressed, setIsButtonPressed] = useState(false);
+  const [violenceList, setViolenceList] = useState([]);
   const videoRef = useRef(null);
   const recorderRef = useRef(null);
    // Crear un formulario para enviar el archivo
@@ -46,31 +45,40 @@ export const ViolenceCamera = () => {
     setVideoFile(file);
   };
 
-  const handleIndentifyViolence = ()=>{
+  const getContentModeration = (jobId) => {
     api
-    .post(`/aws-recognition/contentModeration/video`, formData
-    )
-    .then((res) => {
-      console.log("Esto devuelve:", res.data.JobId);
-      setJobId(res.data.JobId)
-      api
-        .post(`/aws-recognition/getContentModeration`, {"jobId": jobId}
-        )
-        .then((res) => {
-          console.log("Esto devuelve:", res.data);
-          setViolenceList(res.data)
+      .post(`/aws-recognition/getContentModeration`, {"jobId": "6212f44eb959a70ddbe803d7c98b411888fe6fff368856cb8104fd63a7fac1a5"})
+      .then((res) => {
+        console.log("Esto devuelve:", res.data);
+        if (res.data.length === 0) {
+          // Si el array tiene longitud 0, vuelve a hacer la petición
+          getContentModeration(jobId);
+        } else {
+          // Si el array tiene longitud distinta de 0, actualiza el estado
+          setViolenceList(res.data);
           // navigate("/salas");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      // navigate("/salas");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  }
+  const handleIndentifyViolence = () => {
+    setIsButtonPressed(true);
+    api
+      .post(`/aws-recognition/contentModeration/video`, formData)
+      .then((res) => {
+        console.log("Esto devuelve:", res.data.JobId);
+        setJobId(res.data.JobId);
+
+        // Llama a la función recursiva
+        getContentModeration(res.data.JobId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const convertSegAHorMinSeg = (totalSegundos) => {
     const horas = Math.floor(totalSegundos / 3600);
@@ -134,17 +142,23 @@ export const ViolenceCamera = () => {
           </button>
         </div>
 
+
         <div className="px-5 mt-4">
-          <h2 className="text-lg text-gray-400 font-semibold mb-2">Resultado del analisis</h2>
-          <ul>
-            {violenveList.map((violence, i) => (
-              <li key={i} className="flex justify-between items-center border-b py-2">
-                <span>  Tipo de violencia idenfitificada: {violence.ModerationLabel.Name} </ span > 
-                {/* <span>Tipo de violencia idenfitificada: {violence.ModerationLabel.Name} </ span >  <span> En minuto {convertSegAHorMinSeg(violence.Timestamp)}</span> */}
-    
-              </li>
-            ))}
-          </ul>
+        {isButtonPressed && (
+        <>
+           <h2 className="text-lg text-gray-400 font-semibold mb-2">Resultado del analisis</h2>
+          {violenceList.length === 0 ? (
+            <p className='text-lg text-gray-600'>Procesando video...</p>
+          ) : (
+            <ul className=''>
+              {violenceList.map((violence, index) => (
+                <li key={index} className='flex justify-between items-center border-b py-2'><span>  Tipo de violencia idenfitificada: {violence.ModerationLabel.Name} </ span > </li>
+              ))}
+            </ul>
+          )}
+        </>
+      )}
+         
         </div>
       </div>
     </div>
