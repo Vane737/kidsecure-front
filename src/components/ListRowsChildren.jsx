@@ -11,7 +11,6 @@ import  { format, parseISO } from "date-fns"
 //   BsTrashFill
 // } from 'react-icons/bs'
 // import {BiEdit} from 'react-icons/bi'
-// eslint-disable-next-line react/prop-types
 export const ListRowsChildren = ({
   // eslint-disable-next-line react/prop-types
   head = [],
@@ -36,6 +35,7 @@ export const ListRowsChildren = ({
   }
 
   const handleClickCreate = ( b, isTutor ) => {
+    // console.log(istutor);
     if (isTutor) {
       navigate(`/padres/create/${b}`); 
     } else {
@@ -43,13 +43,12 @@ export const ListRowsChildren = ({
     }
 
   };
-  const handleClickList = ( isTutor ) => {
+  const handleClickList = ( b, isTutor ) => {
     if (isTutor) {
-      navigate("/padres"); 
+      navigate(`/padres/${b}`); 
     } else {
       navigate("/personal"); 
     }
-
   };
 
   return (
@@ -92,7 +91,7 @@ export const ListRowsChildren = ({
               
               <button
                 className="bg-secondary rounded-md p-2 font-semibold pr-4 pl-4 text-white"
-                onClick={() => handleClickList( true )}
+                onClick={() => handleClickList(b.id, true )}
               >
                 <ClipboardDocumentListIcon className="h-4 w-4" />
               </button>
@@ -107,7 +106,7 @@ export const ListRowsChildren = ({
 
               <button
                 className="bg-secondary rounded-md p-2 font-semibold pr-4 pl-4 text-white"
-                onClick={() => handleClickList( false )}
+                onClick={() => handleClickList( b.id, false )}
               >
                 <ClipboardDocumentListIcon className="h-4 w-4" />
               </button>

@@ -48,7 +48,7 @@ export const CreateEditParents = () => {
 
   return (
     <div className="container mx-auto w-3/6">
-      <h1 className="text-2xl font-bold text-center mb-4 w-full pt-5">REGISTRAR PERSONAL</h1>
+      <h1 className="text-2xl font-bold text-center mb-4 w-full pt-5">REGISTRAR PADRE</h1>
       <form onSubmit={handlePersonSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block mb-2 w-full">NOMBRE</label>

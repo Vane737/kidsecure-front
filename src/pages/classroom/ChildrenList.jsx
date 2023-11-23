@@ -9,33 +9,39 @@ export const ChildrenList = () => {
 
     const navigate = useNavigate();
     const { id } = useParams();
+    // const { data, charge } = useListDatas(`/child`);
     const { listData, loading } = useListDatas(`/classroom/${id}`);
-  // const { data, charge } = useListDatas(`/child`);
-  const [children, setChildren] = useState([]);
-  const [filteredChildren, setFilteredChildren] = useState([]);
-  const [selectedChildren, setSelectedChildren] = useState([]);
-  const [selectedAge, setSelectedAge] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-
-    // Simular la obtención de datos de niños
-    const fetchData = async () => {
+    const [children, setChildren] = useState([]);
+    const [filteredChildren, setFilteredChildren] = useState([]);
+    const [selectedChildren, setSelectedChildren] = useState([]);
+    const [selectedAge, setSelectedAge] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    
+    useEffect(() => {
+      console.log(listData);
+      // Simular la obtención de datos de niños
+      const fetchData = async () => {
         api
-          .get(`/child`)
-          .then((res) => {
+        .get(`/child`)
+        .then((res) => {
             setChildren(res.data);
             setFilteredChildren(res.data);
-            // navigate("/admin/providers");
+            api
+            .get(`/classroom/${id}`)
+            .then((res) => {
+              setSelectedChildren(res.data.children);
+              console.log(res.data.children);                  
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
           })
           .catch((err) => {
             console.log(err);
           });
 
         };
-    fetchData();
-    
-    // console.log(data);
+    fetchData(); // console.log(data);
     // setChildren(data);
     console.log(children);
     // console.log(listData);
@@ -64,8 +70,16 @@ export const ChildrenList = () => {
   };
 
   const handleRemoveChild = (childId) => {
+    // Obtén el niño que se va a eliminar
+    const childToRemove = selectedChildren.find((child) => child.id === childId);
+  
+    // Añade el niño a filteredChildren solo si no está presente
+    if (!filteredChildren.some((child) => child.id === childId)) {
+      setFilteredChildren([...filteredChildren, childToRemove]);
+    }
+  
+    // Filtra los niños seleccionados para quitar el que estamos eliminando
     setSelectedChildren(selectedChildren.filter((child) => child.id !== childId));
-    setFilteredChildren([...filteredChildren, selectedChildren.find((child) => child.id === childId)]);
   };
 
   const handleSearch = () => {
@@ -112,88 +126,94 @@ export const ChildrenList = () => {
         <div className="flex justify-between px-5 py-5 items-center">
           <h1 className="text-2xl font-semibold text-gray-400">{listData.name}</h1>
         </div>
-
-        <div className="flex justify-between px-5 py-5 items-center">
-          <div className="mr-4">
-            <label className="mr-2">Seleccionar edad:</label>
-            <select
-              className="border p-2 rounded"
-              onChange={handleAgeFilterChange}
-              value={selectedAge}
-            >
-              <option value="">Todos</option>
-              <option value="4">4 años</option>
-              <option value="5">5 años</option>
-              <option value="6">6 años</option>
-              {/* ...más opciones de edad */}
-            </select>
-          </div>
-          <div>
-            <input
-              type="text"
-              className="border p-2 rounded"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Escribir nombre..."
-            />
-            <button
-              className="ml-2 bg-customGreen text-white px-4 py-1 rounded hover:bg-emerald-500"
-              onClick={handleSearch}
-            >
-              Buscar
-            </button>
-          </div>
-        </div>
-        <hr />
-        <div className="px-5 my-4">
-          <h2 className="text-lg text-gray-400 font-semibold mb-2">Seleccionar niños</h2>
-          <ul>
-            {filteredChildren.map((child) => (
-                <li key={child.id} className="flex justify-between items-center border-b py-2">
-                  <span>{child.name} - {calculateAge(child.birthdate)} años</span>
-                  <button
-                    className="bg-primary text-white px-4 py-1 rounded hover:bg-cyan-500"
-                    onClick={() => handleAddChild(child.id)}
-                    disabled={selectedChildren.some((selectedChild) => selectedChild.id === child.id)}
-                  >
-                    Añadir
-                  </button>
-                </li>
-              ))}
-          </ul>
-        </div>
-
-        <div className="px-5 mt-4">
-          <h2 className="text-lg text-gray-400 font-semibold mb-2">Niños en sala</h2>
-          <ul>
-            {selectedChildren.map((child) => (
-              <li key={child.id} className="flex justify-between items-center border-b py-2">
-                <span>{child.name} - {calculateAge(child.birthdate)} años</span>
-                <button
-                  className="bg-customPink text-white px-4 py-1 rounded hover:bg-pink-500"
-                  onClick={() => handleRemoveChild(child.id)}
+        { loading ? (
+          <p>No se ha cargado</p>
+        ) : (
+          <>
+            <div className="flex justify-between px-5 py-5 items-center">
+              <div className="mr-4">
+                <label className="mr-2">Seleccionar edad:</label>
+                <select
+                  className="border p-2 rounded"
+                  onChange={handleAgeFilterChange}
+                  value={selectedAge}
                 >
-                  Eliminar
+                  <option value="">Todos</option>
+                  <option value="4">4 años</option>
+                  <option value="5">5 años</option>
+                  <option value="6">6 años</option>
+                  {/* ...más opciones de edad */}
+                </select>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  className="border p-2 rounded"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Escribir nombre..."
+                />
+                <button
+                  className="ml-2 bg-customGreen text-white px-4 py-1 rounded hover:bg-emerald-500"
+                  onClick={handleSearch}
+                >
+                  Buscar
                 </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="flex justify-end mt-4">
-          <button
-            className="bg-secondary px-4 py-1 rounded hover:bg-emerald-500 mr-2"
-            onClick={handleSave}
-          >
-            Guardar
-          </button>
-          <button
-            className="bg-customPink px-4 py-1 rounded hover:bg-gray-600"
-            onClick={handleCancel}
-          >
-            Cancelar
-          </button>
-        </div>
+              </div>
+            </div>
+            <hr />
+            <div className="px-5 my-4">
+              <h2 className="text-lg text-gray-400 font-semibold mb-2">Seleccionar niños</h2>
+              <ul>
+                {filteredChildren.map((child) => (
+                    <li key={child.id} className="flex justify-between items-center border-b py-2">
+                      <span>{child.name} - {calculateAge(child.birthdate)} años</span>
+                      <button
+                        className="bg-primary text-white px-4 py-1 rounded hover:bg-cyan-500"
+                        onClick={() => handleAddChild(child.id)}
+                        disabled={selectedChildren.some((selectedChild) => selectedChild.id === child.id)}
+                      >
+                        Añadir
+                      </button>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+  
+            <div className="px-5 mt-4">
+              <h2 className="text-lg text-gray-400 font-semibold mb-2">Niños en sala</h2>
+              <ul>
+                {selectedChildren.map((child) => (
+                  <li key={child.id} className="flex justify-between items-center border-b py-2">
+                    <span>{child.name} - {calculateAge(child.birthdate)} años</span>
+                    <button
+                      className="bg-customPink text-white px-4 py-1 rounded hover:bg-pink-500"
+                      onClick={() => handleRemoveChild(child.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+    
+            <div className="flex justify-end mt-4">
+              <button
+                className="bg-secondary px-4 py-1 rounded hover:bg-emerald-500 mr-2"
+                onClick={handleSave}
+              >
+                Guardar
+              </button>
+              <button
+                className="bg-customPink px-4 py-1 rounded hover:bg-gray-600"
+                onClick={handleCancel}
+              >
+                Cancelar
+              </button>
+            </div>
+            
+            </>
+        )}
 
         </div>
       </div>

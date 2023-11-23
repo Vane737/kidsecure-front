@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { MyModal } from '../../components/utils/MyModal';
 // import { useListDatas } from '../../hook';
 import { ListRows } from '../../components/ListRows';
@@ -9,9 +9,9 @@ import { useListDatas } from '../../hook';
 
 export const Parents = () => {
 
-  
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { listData, loading } = useListDatas(`/father`);
+  const { listData, loading } = useListDatas(`/child/${id}/father`);
   const [isOpen, setIsOpen] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
   const [personalId, setPersonalId] = useState(null);
@@ -53,7 +53,7 @@ export const Parents = () => {
   // }
 
   const handleClickCreate = ()=>{
-    navigate('/padres/create');
+    navigate(`/padres/create/${id}`);
   }
 
   return (
@@ -64,8 +64,8 @@ export const Parents = () => {
             <button className='bg-customGreen rounded-md p-2 font-semibold pr-4 pl-4 text-white'
             onClick={handleClickCreate}>Añadir padre o tutor</button>
         </div>
-        {loading ? (
-          <p>Cargando</p>
+        {loading || listData.length < 1 ? (
+          <p>Este niño no tiene padres asignados...</p>
         ) : (
           <div className='mt-16'>
             <ListRows head={head} body={listData} getId={handleClickOption} setEdit={true}/>

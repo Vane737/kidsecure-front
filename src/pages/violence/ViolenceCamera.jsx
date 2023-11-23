@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import RecordRTC from 'recordrtc'
 import api from '../../api/kidsecureApi';
+import ProgressBar from '../../components/utils/ProgressBar';
 
 
 export const ViolenceCamera = () => {
@@ -80,17 +81,17 @@ export const ViolenceCamera = () => {
       });
   };
 
-  const convertSegAHorMinSeg = (totalSegundos) => {
-    const horas = Math.floor(totalSegundos / 3600);
-    const minutos = Math.floor((totalSegundos % 3600) / 60);
-    const segundos = totalSegundos % 60;
-  
+  const convertMS = (milliseconds) => {
+    let seconds = Math.floor(milliseconds / 1000);
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    let hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
     // Formatear los resultados con ceros a la izquierda si es necesario
-    const horasFormateadas = horas.toString().padStart(2, '0');
-    const minutosFormateados = minutos.toString().padStart(2, '0');
-    const segundosFormateados = segundos.toString().padStart(2, '0');
-  
-    return `${horasFormateadas}:${minutosFormateados}:${segundosFormateados}`;
+    const hoursFormatted = hours.toString().padStart(2, '0');
+    const minutesFormatted = minutes.toString().padStart(2, '0');
+    const secondsFormatted = seconds.toString().padStart(2, '0');
+    return `${hoursFormatted}:${minutesFormatted}:${secondsFormatted}`;
   }
 
   return (
@@ -151,8 +152,17 @@ export const ViolenceCamera = () => {
             <p className='text-lg text-gray-600'>Procesando video...</p>
           ) : (
             <ul className=''>
+              <li className='flex justify-between items-center border-b py-2 font-semibold'>
+                <span>  Tipo de violencia idenfitificada</ span > 
+                <span> Tiempo (hh/mm/ss) </span>  
+                <span>  Porcentaje de probabilidad</ span > 
+              </li>
               {violenceList.map((violence, index) => (
-                <li key={index} className='flex justify-between items-center border-b py-2'><span>  Tipo de violencia idenfitificada: {violence.ModerationLabel.Name} </ span > </li>
+                <li key={index} className='flex justify-between items-center border-b py-2'>
+                  <span className='w-44'> {violence.ModerationLabel.Name}</ span > 
+                  <span>{convertMS(violence.Timestamp)}</span>  
+                  <span> {(violence.ModerationLabel.Confidence.toFixed(2))}% <ProgressBar progress={(violence.ModerationLabel.Confidence)} /> </span>
+                </li>
               ))}
             </ul>
           )}

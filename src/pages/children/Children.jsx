@@ -59,28 +59,7 @@ export const Children = () => {
       setPersonalId(null);
     }
   };
-
-//   useEffect(() => {
-//     const deleteUser = async () => {
-//       if (isAccept && personalId) {
-//         const { data, status } = await api.delete(`/usuario/${personalId}`, {
-//           headers: {
-//             'x-token': localStorage.getItem('x-token'),
-//           }
-//         });
-//         if (status >= 400) return;
-//         console.log(data);
-//         window.location.reload();
-//       }
-//     };
-
-//     deleteUser();
-//   }, [isAccept, personalId]);
-
-  // const handleOffsetChange = (numeroPag) => {
-  //   setOffset(numeroPag);
-  // }
-
+  
   const handleClickCreate = ()=>{
     navigate('/niños/create');
   }

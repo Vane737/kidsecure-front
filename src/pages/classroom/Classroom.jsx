@@ -28,7 +28,7 @@ export const Classroom = () => {
       case 'borrar':
         return handleDeleteUser(id);
       case 'vista':
-        return navigate(`/salas/5`);
+        return navigate(`/salas/${id}`);
       case 'editar':
         return navigate(`/salas/edit/${id}`);
       case 'verificar':
@@ -55,27 +55,6 @@ export const Classroom = () => {
       setPersonalId(null);
     }
   };
-
-//   useEffect(() => {
-//     const deleteUser = async () => {
-//       if (isAccept && personalId) {
-//         const { data, status } = await api.delete(`/usuario/${personalId}`, {
-//           headers: {
-//             'x-token': localStorage.getItem('x-token'),
-//           }
-//         });
-//         if (status >= 400) return;
-//         console.log(data);
-//         window.location.reload();
-//       }
-//     };
-
-//     deleteUser();
-//   }, [isAccept, personalId]);
-
-  // const handleOffsetChange = (numeroPag) => {
-  //   setOffset(numeroPag);
-  // }
 
   const handleClickCreate = ()=>{
     navigate('/salas/create');
