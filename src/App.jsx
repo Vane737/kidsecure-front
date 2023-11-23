@@ -43,11 +43,11 @@ function App() {
             <Route path=':id' element={<ReadPersonnel /> } />
             <Route path='verificar/:id' element={<VerifyPersonnel /> } />
           </Route>
-          <Route path='/padres/:id'>
-            <Route index element={<Parents /> } />
+          <Route path='/padres/'>
+            <Route  path=':id' element={<Parents /> } />
             <Route path='create/:id' element={<CreateEditParents /> } />
             <Route path='edit' element={<CreateEditParents /> } />
-            <Route path=':id' element={<ReadParents /> } />
+            <Route path='view/:id' element={<ReadParents /> } />
           </Route>
           
           <Route path='/salas'>

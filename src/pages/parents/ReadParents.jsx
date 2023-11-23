@@ -31,11 +31,11 @@ export const ReadParents = () => {
     
     
     if (loading) {
-        return <div>Cargando persona unica...</div>;
+        return <div>Cargando información de padres...</div>;
       }
     
       if (!person) {
-        return <div>No se encontró el person</div>;
+        return <div>No se encontró al registro</div>;
       }
     //   const nombresAutores = person.autores.map((autor) => autor.nombre).join(', ');
     //   console.log(nombresAutores);

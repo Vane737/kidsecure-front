@@ -35,7 +35,7 @@ export const CreateEditParents = () => {
       })
       .then((res) => {
         console.log(res);
-        navigate("/padres");
+        navigate(`/padres/${id}`);
       })
       .catch((err) => {
         console.log(err);
