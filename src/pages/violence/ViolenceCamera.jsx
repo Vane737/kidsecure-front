@@ -48,7 +48,7 @@ export const ViolenceCamera = () => {
 
   const getContentModeration = (jobId) => {
     api
-      .post(`/aws-recognition/getContentModeration`, {"jobId": "6212f44eb959a70ddbe803d7c98b411888fe6fff368856cb8104fd63a7fac1a5"})
+      .post(`/aws-recognition/getContentModeration`, {"jobId": "9e5ae8ec09c58f38fea64dfa6952839cd8fd7b891cd233524e7eb99d837f6a4e"})
       .then((res) => {
         console.log("Esto devuelve:", res.data);
         if (res.data.length === 0) {
