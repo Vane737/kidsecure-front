@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ImageClassifier, FilesetResolver } from "@mediapipe/tasks-vision";
 import Webcam from 'react-webcam';
 
@@ -28,7 +28,7 @@ const ImageClassifierComponent = () => {
     createImageClassifier();
     return () => {
       if (imageClassifier) {
-        // imageClassifier.close();
+        imageClassifier.close();
       }
     };
   }, []);
@@ -44,12 +44,12 @@ const ImageClassifierComponent = () => {
         p.className = "webcamPredictions";
         p.innerText =
           "Classification: " +
-          classifications[0].categories[0].categoryName +
+          classifications[0].categories[0].label +
           "\n Confidence: " +
           Math.round(parseFloat(classifications[0].categories[0].score) * 100) +
           "%";
       }
-      // classificationResult.close();
+      classificationResult.close();
       if (webcamRunning) {
         window.requestAnimationFrame(predictWebcam);
       }
@@ -68,7 +68,9 @@ const ImageClassifierComponent = () => {
       const constraints = { video: true };
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       webcamRef.current.video.srcObject = stream;
-      webcamRef.current.video.addEventListener("loadeddata", predictWebcam);
+      webcamRef.current.video.addEventListener("loadeddata", () => {
+        predictWebcam();
+      });
     }
   };
 
@@ -79,7 +81,7 @@ const ImageClassifierComponent = () => {
         <button onClick={enableCam}>
           {webcamRunning ? "DISABLE PREDICTIONS" : "ENABLE PREDICTIONS"}
         </button>
-        <div ref={webcamPredictionsRef} className="webcamPredictions bg-primary"></div>
+        <div ref={webcamPredictionsRef} className="webcamPredictions"></div>
       </div>
     </div>
   );
