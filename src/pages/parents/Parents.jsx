@@ -60,7 +60,7 @@ export const Parents = () => {
     <div className="w-full p-5 container">
       <div className="mt-3 w-full">
         <div className='flex justify-between px-5 py-5 items-center'>
-            <h1 className="text-2xl font-semibold text-gray-400">Padres</h1>
+        <h1 className="text-2xl font-semibold text-gray-400">Padres</h1>
             <button className='bg-customGreen rounded-md p-2 font-semibold pr-4 pl-4 text-white'
             onClick={handleClickCreate}>Añadir padre o tutor</button>
         </div>

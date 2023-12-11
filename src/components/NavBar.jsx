@@ -1,155 +1,102 @@
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, HomeIcon, XMarkIcon } from '@heroicons/react/24/outline'
-// import classNames from 'classnames'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { UserCircleIcon, BellIcon } from '@heroicons/react/24/solid';
+import { usePopper } from 'react-popper';
+import NotificationItem from './utils/NotificationItem'; // Asegúrate de importar correctamente el componente NotificationItem
 
+const NavBar = () => {
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+  const [isNotificationOpen, setNotificationOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
 
+  const openNotification = () => {
+    setNotificationOpen(!isNotificationOpen);
+  };
 
-const navigation = [
-  { name: 'Dashboard', href: '#', current: false },
-  { name: 'Home', href: '/', current: false },
-  { name: 'Acerca', href: '/acerca', current: false },
-  { name: 'Contacto', href: '#', current: false },
-]
+  const notifications = [
+    {
+      id: 1,
+      title: "Se ha identificado un acto de violencia",
+      description: "Visualiza y confirma que sí es un acto de violencia"
+    },
+    {
+      id: 2,
+      title: "Nueva notificación",
+      description: "Descripción de la nueva notificación"
+    },
+    // Agrega más notificaciones según sea necesario
+  ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+  // Método simulado que devuelve la cantidad de notificaciones
+  const getNotificationCount = () => {
+    // Aquí deberías llamar a tu método real que devuelve la cantidad de notificaciones
+    // Este es solo un ejemplo simulado
+    return notifications.length; // Cambia esto con la lógica real
+  };
 
-export default function NavBar() {
+  // Actualizar el conteo de notificaciones cuando el componente se monta
+  useState(() => {
+    setNotificationCount(getNotificationCount());
+  }, []);
 
-    return (
-      <Disclosure as="nav" className="bg-primary">
-        {({ open }) => (
-          <>
-            <div className="mx-auto sm:px-6 lg:px-8">
-              <div className="relative flex h-16 items-center justify-between">
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                  {/* Mobile menu button*/}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                    <span className="absolute -inset-0.5" />
-                    <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Disclosure.Button>
-                </div>
-                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                  <div className="flex flex-shrink-0 items-center">
-                  <HomeIcon className="h-5 w-5 mr-2" />
-                    <a href="/" className="text-white">
-                      Icono
-                    </a>
-                  </div>
-                  {/* <div className="hidden sm:ml-6 sm:block">
-                    <div className="flex space-x-4">
-                      {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                            'rounded-md px-3 py-2 text-sm font-medium'
-                          )}
-                          aria-current={item.current ? 'page' : undefined}
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                  </div> */}
-                </div>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
-                    type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-  
-                  {/* Profile dropdown */}
-                  <Menu as="div" className="relative ml-3">
-                    <div>
-                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        <span className="absolute -inset-1.5" />
-                        <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      // as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            >
-                              Your Profile
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            >
-                              Settings
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            >
-                              Sign out
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
-                </div>
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    placement: 'bottom-end',
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 10], // Ajusta el desplazamiento según tus necesidades
+        },
+      },
+    ],
+  });
+
+  return (
+    <nav className="bg-primary py-2 px-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <Link to="/" className="text-white text-2xl font-bold">
+          Tu Logo
+        </Link>
+
+        <div className="flex items-center space-x-2">
+          {/* Icono de campana con conteo de notificaciones */}
+          <div
+            ref={setReferenceElement}
+            onClick={openNotification}
+            className="cursor-pointer relative"
+          >
+            <BellIcon className="h-12 w-8 text-secondary" />
+            {notificationCount > 0 && (
+              <div className="absolute bottom-7 right-0 text-xs font-semibold pt-0.5 bg-customPink text-white rounded-full w-4 h-5 text-center">
+                {notificationCount}
               </div>
+            )}
+          </div>
+
+          {/* Información del usuario */}
+          <div className="flex items-center space-x-2">
+            <UserCircleIcon className="h-8 w-8 text-gray-300" />
+            <span className="text-white">Usuario</span>
+          </div>
+        </div>
+          {isNotificationOpen && (
+            <div
+              ref={setPopperElement}
+              style={styles.popper}
+              {...attributes.popper}
+              className="fixed bg-cyan-50 p-4 rounded-md shadow-md"
+            >
+              {notifications.map((notification) => (
+                <NotificationItem key={notification.id} notification={notification} />
+              ))}
             </div>
-  
-            <Disclosure.Panel className="sm:hidden">
-              <div className="space-y-1 px-2 pb-3 pt-2">
-                {navigation.map((item) => (
-                  <Disclosure.Button
-                    key={item.name}
-                    as="a"
-                    href={item.href}
-                    className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                      'block rounded-md px-3 py-2 text-base font-medium'
-                    )}
-                    aria-current={item.current ? 'page' : undefined}
-                  >
-                    {item.name}
-                  </Disclosure.Button>
-                ))}
-              </div>
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure>
-    )
-}
+          )}
+      </div>
+
+      {/* Popover de Notificaciones */}
+    </nav>
+  );
+};
+
+export default NavBar;
