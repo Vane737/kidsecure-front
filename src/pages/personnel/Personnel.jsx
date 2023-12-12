@@ -2,8 +2,10 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { MyModal } from '../../components/utils/MyModal';
 // import { useListDatas } from '../../hook';
 import { ListRows } from '../../components/ListRows';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useListDatas } from '../../hook';
+
+import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 // import api from '../../API/axios';
 // import Pagination from '../../components/utils/Pagination';
 
@@ -75,7 +77,7 @@ export const Personnel = () => {
   // }
 
   const handleClickCreate = ()=>{
-    navigate('/personal/create');
+    navigate('/niños');
   }
 
   return (
@@ -83,8 +85,11 @@ export const Personnel = () => {
       <div className="mt-3 w-full">
         <div className='flex justify-between px-5 py-5 items-center'>
             <h1 className="text-2xl font-semibold text-gray-400">PERSONAL AUTORIZADO</h1>
-            <button className='bg-customGreen rounded-md p-2 font-semibold pr-4 pl-4 text-white'
-            onClick={handleClickCreate}>Añadir persona</button>
+            <button className='bg-customGreen rounded-md py-3 font-semibold pr-4 pl-4 text-white flex justify-between items-center'
+            onClick={handleClickCreate}>
+              <ArrowLeftIcon className="h-6 w-6" />
+              Volver a niños
+            </button>
         </div>
         {loading ? (
           <p>Cargando...</p>

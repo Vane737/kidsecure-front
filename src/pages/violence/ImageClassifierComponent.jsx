@@ -2,6 +2,10 @@
 // export default ImageClassifierComponent;
 import { useEffect, useRef, useState } from 'react';
 import { ImageClassifier, FilesetResolver } from "@mediapipe/tasks-vision";
+import io from "socket.io-client";
+
+const socket = io('https://notifications-0v22.onrender.com/');
+
 
 const ImageClassifierComponent = () => {
   const videoRef = useRef(null);
@@ -12,6 +16,33 @@ const ImageClassifierComponent = () => {
   const chunksRef = useRef([]);
   const [recording, setRecording] = useState(false);
   const [downloadLink, setDownloadLink] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const [notifications, setNotifications] = useState(null);
+
+  // Envio de notificaciones
+
+  const sendNotification = () => {
+    socket.emit('notification', {
+      user_id: 1,
+      item_name: "prueba desde el cliente",
+      item_type: "prueba",
+      item_date: "prueba",
+      item_time: "prueba",
+      item_location: "prueba",
+      item_imagen: "prueba"
+    }
+    );
+  }
+
+  // Recibir notificaciones
+  // useEffect(() => {
+  //   socket.on('notification_processed', (notification) => {
+  //     setNotification(notification);
+  //   });
+  // }, []);
+  
+
+
 
   const createImageClassifier = async () => {
     try {
@@ -210,6 +241,7 @@ const ImageClassifierComponent = () => {
           <div className="App text-center items-center">
             <video ref={videoRef} autoPlay playsInline muted />
             <div ref={fightAlertDivRef} className="fightAlertDiv text-2xl bg-primary text-white"></div>
+            <button onClick={sendNotification}>Enviar Notificación</button>
             {/* {downloadLink && (
               <a href={downloadLink} download="violence_detection_video.webm">
                 Descargar Video

@@ -4,6 +4,7 @@ import { MyModal } from '../../components/utils/MyModal';
 import { ListRows } from '../../components/ListRows';
 import { useState } from 'react';
 import { useListDatas } from '../../hook';
+import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 // import api from '../../API/axios';
 // import Pagination from '../../components/utils/Pagination';
 
@@ -53,7 +54,7 @@ export const Parents = () => {
   // }
 
   const handleClickCreate = ()=>{
-    navigate(`/padres/create/${id}`);
+    navigate(`/niños`);
   }
 
   return (
@@ -61,8 +62,11 @@ export const Parents = () => {
       <div className="mt-3 w-full">
         <div className='flex justify-between px-5 py-5 items-center'>
         <h1 className="text-2xl font-semibold text-gray-400">Padres</h1>
-            <button className='bg-customGreen rounded-md p-2 font-semibold pr-4 pl-4 text-white'
-            onClick={handleClickCreate}>Añadir padre o tutor</button>
+        <button className='bg-customGreen rounded-md py-3 font-semibold pr-4 pl-4 text-white flex justify-between items-center'
+            onClick={handleClickCreate}>
+              <ArrowLeftIcon className="h-6 w-6" />
+              Volver a niños
+            </button>
         </div>
         {loading || listData.length < 1 ? (
           <p>Este niño no tiene padres asignados...</p>
