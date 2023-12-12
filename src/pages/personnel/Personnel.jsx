@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { MyModal } from '../../components/utils/MyModal';
 // import { useListDatas } from '../../hook';
 import { ListRows } from '../../components/ListRows';
@@ -11,11 +11,11 @@ import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 
 export const Personnel = () => {
 
-
+  const { id } = useParams();
   const navigate = useNavigate();
   // const regXPage = 6;
   // const [ offset, setOffset ] = useState(0);
-  const { listData, loading } = useListDatas(`/authorized-person`);
+  const { listData, loading } = useListDatas(`/child/${id}/authorizedPerson`);
   // const loading = false;
   const [isOpen, setIsOpen] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
@@ -31,7 +31,7 @@ export const Personnel = () => {
       case 'editar':
         return navigate(`niños/personal/edit/${id}`);
       case 'verificar':
-        return navigate(`niños/personal/verificar/${id}`);
+        return navigate(`/niños/personal/verificar/${id}`);
       default:
         break;
     }

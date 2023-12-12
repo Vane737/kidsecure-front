@@ -5,7 +5,7 @@ import api from "../../api/kidsecureApi";
 import { MyModalAccept } from "../../components/utils/MyModalAccept";
 
 export const VerifyPersonnel = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // id del niño
   const navigate = useNavigate();
   const webcamRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
