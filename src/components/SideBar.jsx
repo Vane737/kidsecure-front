@@ -44,14 +44,14 @@ import { NavLink } from 'react-router-dom';
               Control de Salida
             </NavLink>
           </li>
-          <li className="">
+          {/* <li className="">
             <NavLink to="/mensajes" 
             className={({ isActive }) => (isActive? "p-3 flex items-center rounded-sm bg-firstop bg-opacity-100 text-primary" : "p-3 flex items-center rounded-sm hover:bg-firstop bg-opacity-100 hover:text-primary")}
             >
               <ChatBubbleLeftEllipsisIcon className="h-5 w-5 mr-2" />
               Mensajes
             </NavLink>
-          </li>
+          </li> */}
           <li className="">
             <NavLink to="/deteccion" 
             className={({ isActive }) => (isActive? "p-3 flex items-center rounded-sm bg-firstop bg-opacity-100 text-primary" : "p-3 flex items-center rounded-sm hover:bg-firstop bg-opacity-100 hover:text-primary")}
