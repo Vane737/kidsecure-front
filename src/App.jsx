@@ -38,14 +38,14 @@ function App() {
             <Route path=':id' element={<ReadChildren /> } />
           </Route>
 
-          <Route path='/personal'>
-            <Route index element={<Personnel /> } />
+          <Route path='niños/personal'>
+            <Route path=':id' element={<Personnel /> } />
             <Route path='create/:id' element={<CreateEditPersonnel /> } />
             <Route path='edit' element={<CreateEditPersonnel /> } />
             <Route path=':id' element={<ReadPersonnel /> } />
             <Route path='verificar/:id' element={<VerifyPersonnel /> } />
           </Route>
-          <Route path='/padres/'>
+          <Route path='niños/padres/'>
             <Route  path=':id' element={<Parents /> } />
             <Route path='create/:id' element={<CreateEditParents /> } />
             <Route path='edit' element={<CreateEditParents /> } />

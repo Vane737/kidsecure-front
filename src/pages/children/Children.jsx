@@ -27,9 +27,9 @@ export const Children = () => {
       case 'editar':
         return navigate(`/admin/user/edit/${id}`);
       case 'padre':
-        return navigate(`/padres/create`);
+        return navigate(`niños/padres/create`);
       case 'persona':
-        return navigate(`/personal/create`);
+        return navigate(`niños/personal/create`);
       default:
         break;
     }

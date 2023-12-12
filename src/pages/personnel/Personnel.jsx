@@ -27,11 +27,11 @@ export const Personnel = () => {
       case 'borrar':
         return handleDeleteUser(id);
       case 'vista':
-        return navigate(`/personal/5`);
+        return navigate(`niños/personal/5`);
       case 'editar':
-        return navigate(`/personal/edit/${id}`);
+        return navigate(`niños/personal/edit/${id}`);
       case 'verificar':
-        return navigate(`/personal/verificar/${id}`);
+        return navigate(`niños/personal/verificar/${id}`);
       default:
         break;
     }

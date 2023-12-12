@@ -9,7 +9,7 @@ export const CreateEditPersonnel = () => {
   const [cellphone, setCellphone] = useState("");
   const [ci, setCi] = useState("");
   const [photo, setPhoto] = useState(null); // Cambio: Inicializa photo como null
-
+  
   // Handlers
   const handlePersonSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ export const CreateEditPersonnel = () => {
     data.append("name", name);
     data.append("cellphone", cellphone);
     data.append("ci", ci);
-    data.append("user_id", id); // Ya es un número, no necesitas parseInt
+    data.append("child_id", id); // Ya es un número, no necesitas parseInt
     data.append("photo", photo); // Agrega el archivo al objeto FormData
 
     api
@@ -29,7 +29,7 @@ export const CreateEditPersonnel = () => {
       })
       .then((res) => {
         console.log(res);
-        navigate("/personal");
+        navigate(`/niños/personal/${id}`)
       })
       .catch((err) => {
         console.log(err);

@@ -37,17 +37,17 @@ export const ListRowsChildren = ({
   const handleClickCreate = ( b, isTutor ) => {
     // console.log(istutor);
     if (isTutor) {
-      navigate(`/padres/create/${b}`); 
+      navigate(`padres/create/${b}`); 
     } else {
-      navigate(`/personal/create/${b}`); 
+      navigate(`personal/create/${b}`); 
     }
 
   };
   const handleClickList = ( b, isTutor ) => {
     if (isTutor) {
-      navigate(`/padres/${b}`); 
+      navigate(`padres/${b}`); 
     } else {
-      navigate("/personal"); 
+      navigate(`personal/${b}`); 
     }
   };
 
