@@ -11,7 +11,7 @@ import { Parents, CreateEditParents, ReadParents } from './pages/parents';
 import { Personnel, ReadPersonnel, CreateEditPersonnel, VerifyPersonnel } from './pages/personnel';
 import { Classroom, CreateEditClassroom, ReadClassroom, ChildrenList } from './pages/classroom';
 import { ViolenceCamera } from './pages/violence';
-import ImageClassifierComponent from './pages/ImageClassifierComponent';
+import ImageClassifierComponent from './pages/violence/ImageClassifierComponent';
 
 // import viteLogo from '/vite.svg'
 
@@ -71,7 +71,7 @@ function App() {
             <Route path='create' element={<CreateEditClassroom /> } />
             <Route path='edit/:id' element={<CreateEditClassroom /> } />
             <Route path=':id' element={<ReadClassroom /> } />
-            <Route path='classifier' element={<ImageClassifierComponent /> } />
+            <Route path='realtime' element={<ImageClassifierComponent /> } />
           </Route>
 
           {/* <Route path='/padres'>
