@@ -1,12 +1,40 @@
 import { useEffect, useRef, useState } from 'react';
 import { ImageClassifier, FilesetResolver } from "@mediapipe/tasks-vision";
 import Webcam from 'react-webcam';
+import io from "socket.io-client";
+
+const socket = io('https://notifications-0v22.onrender.com/');
 
 const ImageClassifierComponent = () => {
   const webcamRef = useRef(null);
   const [webcamRunning, setWebcamRunning] = useState(false);
   const webcamPredictionsRef = useRef(null);
   const [imageClassifier, setImageClassifier] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const [notifications, setNotifications] = useState(null);
+
+  // Envio de notificaciones
+
+  const sendNotification = () => {
+    socket.emit('notification', {
+      user_id: 1,
+      item_name: "prueba desde el cliente",
+      item_type: "prueba",
+      item_date: "prueba",
+      item_time: "prueba",
+      item_location: "prueba",
+      item_imagen: "prueba"
+    }
+    );
+  }
+
+  // Recibir notificaciones
+  // useEffect(() => {
+  //   socket.on('notification_processed', (notification) => {
+  //     setNotification(notification);
+  //   });
+  // }, []);
+
 
   // Crea el clasificador de imágenes
   const createImageClassifier = async () => {
@@ -82,6 +110,7 @@ const ImageClassifierComponent = () => {
           {webcamRunning ? "DISABLE PREDICTIONS" : "ENABLE PREDICTIONS"}
         </button>
         <div ref={webcamPredictionsRef} className="webcamPredictions"></div>
+        <button onClick={sendNotification}>Enviar Notificación</button>
       </div>
     </div>
   );
