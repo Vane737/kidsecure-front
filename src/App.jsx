@@ -12,6 +12,7 @@ import { Personnel, ReadPersonnel, CreateEditPersonnel, VerifyPersonnel } from '
 import { Classroom, CreateEditClassroom, ReadClassroom, ChildrenList } from './pages/classroom';
 import { ViolenceCamera } from './pages/violence';
 import ImageClassifierComponent from './pages/violence/ImageClassifierComponent';
+import OutputControl from './pages/outputControl/OutputControl';
 
 // import viteLogo from '/vite.svg'
 
@@ -74,6 +75,9 @@ function App() {
             <Route path='realtime' element={<ImageClassifierComponent /> } />
           </Route>
 
+          <Route path='/salidas'>
+            <Route index element={<OutputControl /> } />
+          </Route>
           {/* <Route path='/padres'>
             <Route path=':id' element={<div>Padre</div>} />
           </Route>

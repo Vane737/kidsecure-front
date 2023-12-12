@@ -37,7 +37,7 @@ import { NavLink } from 'react-router-dom';
             </NavLink>
           </li>
           <li className="">
-            <NavLink to="/contacto" 
+            <NavLink to="/salidas" 
             className={({ isActive }) => (isActive? "p-3 flex items-center rounded-sm bg-firstop bg-opacity-100 text-primary" : "p-3 flex items-center rounded-sm hover:bg-firstop bg-opacity-100 hover:text-primary")}
             >
               <ClipboardDocumentCheckIcon className="h-5 w-5 mr-2" />

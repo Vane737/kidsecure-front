@@ -8,13 +8,6 @@ import { ListRowsChildren } from '../../components/ListRowsChildren';
 
 export const Children = () => {
 
-  // const listData = {
-  //   parents: [
-  //       { id: 1, name: 'Maria', telefono: '88768736', ci: '9689554' },
-  //       {  id: 2, name: 'Juan', telefono: '88768736', ci: '9689554' },
-  //       { id: 3, name: 'Pedro', telefono: '88768736', ci: '9689554' }
-  //   ]    
-  // }  
   const navigate = useNavigate();
   // const regXPage = 6;
   // const [ offset, setOffset ] = useState(0);
