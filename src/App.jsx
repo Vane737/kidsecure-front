@@ -14,8 +14,6 @@ import { ViolenceCamera } from './pages/violence';
 import ImageClassifierComponent from './pages/violence/ImageClassifierComponent';
 import OutputControl from './pages/outputControl/OutputControl';
 
-// import viteLogo from '/vite.svg'
-
 
 
 

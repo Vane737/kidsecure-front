@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Webcam from "react-webcam";
 import api from "../../api/kidsecureApi";
 import { MyModalAccept } from "../../components/utils/MyModalAccept";
 
+
 export const VerifyPersonnel = () => {
   const { id } = useParams(); // id del niño
-  const navigate = useNavigate();
   const webcamRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isAccept, setIsAccept] = useState(false);

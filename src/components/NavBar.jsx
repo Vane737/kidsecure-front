@@ -1,44 +1,46 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserCircleIcon, BellIcon } from '@heroicons/react/24/solid';
 import { usePopper } from 'react-popper';
 import NotificationItem from './utils/NotificationItem'; // Asegúrate de importar correctamente el componente NotificationItem
+import io from "socket.io-client";
+import Default from '../assets/img/logo.png';
 
-const NavBar = () => {
+
+const NavBar = ( ) => {
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const [isNotificationOpen, setNotificationOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
-
+  const [notifications, setNotifications] = useState([]);
+  const [socket, setSocket] = useState(null);
+  
+  
   const openNotification = () => {
     setNotificationOpen(!isNotificationOpen);
   };
-
-  const notifications = [
-    {
-      id: 1,
-      title: "Se ha identificado un acto de violencia",
-      description: "Visualiza y confirma que sí es un acto de violencia"
-    },
-    {
-      id: 2,
-      title: "Nueva notificación",
-      description: "Descripción de la nueva notificación"
-    },
-    // Agrega más notificaciones según sea necesario
-  ];
-
-  // Método simulado que devuelve la cantidad de notificaciones
-  const getNotificationCount = () => {
-    // Aquí deberías llamar a tu método real que devuelve la cantidad de notificaciones
-    // Este es solo un ejemplo simulado
-    return notifications.length; // Cambia esto con la lógica real
-  };
-
-  // Actualizar el conteo de notificaciones cuando el componente se monta
-  useState(() => {
-    setNotificationCount(getNotificationCount());
-  }, []);
+  
+  useEffect(() => {
+    const socketInstance = io('https://notifications-0v22.onrender.com/');
+    // const socketInstance = io('http://localhost:5000');
+    setSocket(socketInstance);
+  
+    console.log('Se ha ejecutado el useffect en el navbar');
+    // Escuchar eventos de notificación solo una vez
+    socketInstance.on('notification_processed', (notification) => {
+      // Manejar el evento de notificación aquí
+      setNotifications((prevNotifications) => [...prevNotifications, notification]);
+      console.log('Evento de notificación recibido:', notification);
+      console.log('Se ha incrementado la notificación');
+      setNotificationCount((prevCount) => prevCount + 1);
+    });  
+    // listen for events emitted by the server
+    return () => {
+      if (socketInstance) {
+        socketInstance.disconnect();
+      }
+    }  
+  }, []); 
 
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: 'bottom-end',
@@ -46,7 +48,7 @@ const NavBar = () => {
       {
         name: 'offset',
         options: {
-          offset: [0, 10], // Ajusta el desplazamiento según tus necesidades
+          offset: [-10, -5], // Ajusta el desplazamiento según tus necesidades
         },
       },
     ],
@@ -56,7 +58,11 @@ const NavBar = () => {
     <nav className="bg-primary py-2 px-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-white text-2xl font-bold">
-          Tu Logo
+        <img
+          src={Default} // Reemplaza con la ruta a tu ícono
+          alt="Notification Icon"
+          className="h-10 w-16"
+        />
         </Link>
 
         <div className="flex items-center space-x-2">
@@ -67,7 +73,7 @@ const NavBar = () => {
             className="cursor-pointer relative"
           >
             <BellIcon className="h-12 w-8 text-secondary" />
-            {notificationCount > 0 && (
+            { notificationCount >= 0 && (
               <div className="absolute bottom-7 right-0 text-xs font-semibold pt-0.5 bg-customPink text-white rounded-full w-4 h-5 text-center">
                 {notificationCount}
               </div>
@@ -80,18 +86,18 @@ const NavBar = () => {
             <span className="text-white">Usuario</span>
           </div>
         </div>
-          {isNotificationOpen && (
-            <div
-              ref={setPopperElement}
-              style={styles.popper}
-              {...attributes.popper}
-              className="fixed bg-cyan-50 p-4 rounded-md shadow-md"
-            >
-              {notifications.map((notification) => (
-                <NotificationItem key={notification.id} notification={notification} />
-              ))}
-            </div>
-          )}
+        {isNotificationOpen || notifications && (
+          <div
+            ref={setPopperElement}
+            style={styles.popper}
+            {...attributes.popper}
+            className="fixed bg-emerald-50 p-4 rounded-md shadow-md"
+          >
+            {notifications.map((notification, index) => (
+              <NotificationItem key={index} notification={notification} />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Popover de Notificaciones */}
