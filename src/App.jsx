@@ -14,6 +14,7 @@ import { ViolenceCamera } from './pages/violence';
 import ImageClassifierComponent from './pages/violence/ImageClassifierComponent';
 import OutputControl from './pages/outputControl/OutputControl';
 import { Contacto } from './pages/Contacto';
+import { Dashboard } from './pages/Dashboard';
 // import { HomePage } from './pages/HomePage';
 
 
@@ -28,7 +29,7 @@ function App() {
         <div className='flex'>
         <SideBar />
         <Routes>       {/* El que contendra las rutas */}
-          <Route path='/' element={<Contacto />} />
+          <Route path='/' element={<Dashboard />} />
           <Route path='/contacto' element={ <Contacto /> } />
 
           <Route path='/niños'>
