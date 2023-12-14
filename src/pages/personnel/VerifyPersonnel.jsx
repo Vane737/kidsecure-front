@@ -33,7 +33,29 @@ export const VerifyPersonnel = () => {
       .then((res) => {
         setText('Es una persona autorizada')
         setIsOpen(true);
+        setTimeout(() => {
+          setIsOpen(false);
+          // También puedes limpiar el estado de mensajes o hacer cualquier otra acción necesaria aquí
+        }, 1000);
         console.log(res);
+        console.log('Aqui se hara el registro de salida del niño');
+        api
+          .post("/outpu-control/register", data, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            setText('Se ha realizado el registro de salida del niño')
+            // setIsOpen(true);
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log('No se logro realizar el registro de salida');
+            // setIsOpen(true);
+            // setText('No se logro realizar el registro de salida')
+            console.log(err);
+          });
         // navigate("/personal");
       })
       .catch((err) => {

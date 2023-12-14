@@ -5,8 +5,7 @@ import { ListRows } from '../../components/ListRows';
 import { useState } from 'react';
 import { useListDatas } from '../../hook';
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
-// import api from '../../API/axios';
-// import Pagination from '../../components/utils/Pagination';
+
 
 export const Parents = () => {
 

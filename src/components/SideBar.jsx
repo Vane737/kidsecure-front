@@ -1,4 +1,4 @@
-import { HomeIcon, SunIcon, ClipboardDocumentCheckIcon, ViewColumnsIcon, ChatBubbleLeftEllipsisIcon, ViewfinderCircleIcon  } from '@heroicons/react/24/solid';
+import { HomeIcon, SunIcon, ClipboardDocumentCheckIcon, ViewColumnsIcon, IdentificationIcon, ViewfinderCircleIcon  } from '@heroicons/react/24/solid';
 import { NavLink } from 'react-router-dom';
 
 
@@ -44,14 +44,14 @@ import { NavLink } from 'react-router-dom';
               Control de Salida
             </NavLink>
           </li>
-          {/* <li className="">
-            <NavLink to="/mensajes" 
+          <li className="">
+            <NavLink to="/contacto" 
             className={({ isActive }) => (isActive? "p-3 flex items-center rounded-sm bg-firstop bg-opacity-100 text-primary" : "p-3 flex items-center rounded-sm hover:bg-firstop bg-opacity-100 hover:text-primary")}
             >
-              <ChatBubbleLeftEllipsisIcon className="h-5 w-5 mr-2" />
-              Mensajes
+              <IdentificationIcon className="h-5 w-5 mr-2" />
+              Contactos
             </NavLink>
-          </li> */}
+          </li>
           <li className="">
             <NavLink to="/deteccion" 
             className={({ isActive }) => (isActive? "p-3 flex items-center rounded-sm bg-firstop bg-opacity-100 text-primary" : "p-3 flex items-center rounded-sm hover:bg-firstop bg-opacity-100 hover:text-primary")}

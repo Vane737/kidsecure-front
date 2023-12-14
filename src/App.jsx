@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // import { Home } from './pages/Home'
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
-import Contacto from './pages/Contacto';
+// import Contato  from './pages/Contacto'
 import { Children,  CreateEditChildren, ReadChildren  } from './pages/children';
 import { Parents, CreateEditParents, ReadParents } from './pages/parents';
 import { Personnel, ReadPersonnel, CreateEditPersonnel, VerifyPersonnel } from './pages/personnel';
@@ -13,6 +13,8 @@ import { Classroom, CreateEditClassroom, ReadClassroom, ChildrenList } from './p
 import { ViolenceCamera } from './pages/violence';
 import ImageClassifierComponent from './pages/violence/ImageClassifierComponent';
 import OutputControl from './pages/outputControl/OutputControl';
+import { Contacto } from './pages/Contacto';
+import { HomePage } from './pages/HomePage';
 
 
 
@@ -26,7 +28,7 @@ function App() {
         <div className='flex'>
         <SideBar />
         <Routes>       {/* El que contendra las rutas */}
-          <Route path='/' element={<Contacto />} />
+          <Route path='/' element={<HomePage />} />
           <Route path='/contacto' element={ <Contacto /> } />
 
           <Route path='/niños'>
@@ -76,12 +78,6 @@ function App() {
           <Route path='/salidas'>
             <Route index element={<OutputControl /> } />
           </Route>
-          {/* <Route path='/padres'>
-            <Route path=':id' element={<div>Padre</div>} />
-          </Route>
-          <Route path='/niños'>
-            <Route path=':id' element={<div>Niño</div>} />
-          </Route> */}
 
         </Routes>
       </div>

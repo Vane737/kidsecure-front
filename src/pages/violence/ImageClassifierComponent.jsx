@@ -174,9 +174,12 @@ const ImageClassifierComponent = () => {
   const sendToServer = (file) => {
     console.log('Se está enviando el video al servidor....');
 
+    const currentDate = new Date();
+    const fileName = `violence_detection_video_${currentDate.getTime()}.webm`;
+  
     const formData = new FormData();
-    formData.append('video', file, 'violence_detection_videoss');
-
+    formData.append('video', file, fileName);
+  
     api.post(`/aws-recognition/upload/video`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -185,16 +188,15 @@ const ImageClassifierComponent = () => {
       .then((response) => {
         console.log('Respuesta del servidor:', response.data.videoUrl);
         console.log('Video guardado exitosamente en el servidor.');
-        console.log('Se procedera a enviar la notificacion');
-
+        console.log('Se procederá a enviar la notificación');
+  
         socket.emit('notification', {
           type: "Posible acto de violencia detectado",
-          date: new Date().toLocaleDateString(),
-          time: new Date().toLocaleTimeString(),
+          date: currentDate.toLocaleDateString(),
+          time: currentDate.toLocaleTimeString(),
           videoUrl: response.data.videoUrl,
           user_id: 1
         });
-
       })
       .catch((error) => {
         console.error('Error al enviar el video al servidor:', error);
